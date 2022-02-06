@@ -1,26 +1,25 @@
 cask "github-beta" do
-  version "2.9.4-beta4-e25e14f5"
+  arch = Hardware::CPU.intel? ? "x64" : "arm64"
+  platform = Hardware::CPU.intel? ? "darwin" : "darwin-arm64"
+
+  version "2.9.7-beta1-d4bf2c44"
 
   if Hardware::CPU.intel?
-    sha256 "e1d04bbada4f0f94db6d4f3134776e9982b3f9ad9ba4fa840d4fad1b5f3f4eff"
-
-    url "https://desktop.githubusercontent.com/github-desktop/releases/#{version}/GitHubDesktop-x64.zip",
-        verified: "desktop.githubusercontent.com/"
+    sha256 "1eae386e3af83fc85d95111fe9489131be202312bdeed1dd2f7cfc6f461985f2"
   else
-    sha256 "2156004cdf7e625d522c617de532052510f5a623f8ec30513415e881e71bd0dd"
-
-    url "https://desktop.githubusercontent.com/github-desktop/releases/#{version}/GitHubDesktop-arm64.zip",
-        verified: "desktop.githubusercontent.com/"
+    sha256 "4af0c0b253b5491cebf9cd88c2857ed0a4c1a0ce0de98b72563755abbf090b9d"
   end
 
+  url "https://desktop.githubusercontent.com/github-desktop/releases/#{version}/GitHubDesktop-#{arch}.zip",
+      verified: "desktop.githubusercontent.com/github-desktop/"
   name "GitHub Desktop"
   desc "Desktop client for GitHub repositories"
   homepage "https://desktop.github.com/"
 
   livecheck do
-    url "https://central.github.com/deployments/desktop/desktop/latest/darwin?env=beta"
+    url "https://central.github.com/deployments/desktop/desktop/latest/#{platform}?env=beta"
     strategy :header_match
-    regex(%r{(\d+(?:\.\d+)[^/]*)/GitHubDesktop-x64\.zip}i)
+    regex(%r{(\d+(?:\.\d+)[^/]*)/GitHubDesktop[._-]#{arch}\.zip}i)
   end
 
   auto_updates true
@@ -30,14 +29,16 @@ cask "github-beta" do
   binary "#{appdir}/GitHub Desktop.app/Contents/Resources/app/static/github.sh", target: "github"
 
   zap trash: [
-    "~/Library/Application Support/GitHub Desktop",
+    "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.github.GitHubClient.sfl*",
     "~/Library/Application Support/com.github.GitHubClient",
     "~/Library/Application Support/com.github.GitHubClient.ShipIt",
+    "~/Library/Application Support/GitHub Desktop",
     "~/Library/Application Support/ShipIt_stderr.log",
     "~/Library/Application Support/ShipIt_stdout.log",
-    "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.github.GitHubClient.sfl*",
     "~/Library/Caches/com.github.GitHubClient",
     "~/Library/Caches/com.github.GitHubClient.ShipIt",
+    "~/Library/Logs/GitHub Desktop",
+    "~/Library/Preferences/ByHost/com.github.GitHubClient.ShipIt.*.plist",
     "~/Library/Preferences/com.github.GitHubClient.helper.plist",
     "~/Library/Preferences/com.github.GitHubClient.plist",
   ],

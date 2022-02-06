@@ -1,21 +1,15 @@
 cask "google-chrome-beta" do
-  version "95.0.4638.49"
+  version "99.0.4844.15"
   sha256 :no_check
 
-  if Hardware::CPU.intel?
-    url "https://dl.google.com/chrome/mac/beta/googlechromebeta.dmg"
-  else
-    url "https://dl.google.com/chrome/mac/universal/beta/googlechromebeta.dmg"
-  end
-
+  url "https://dl.google.com/chrome/mac/universal/beta/googlechromebeta.dmg"
   name "Google Chrome Beta"
   desc "Web browser"
   homepage "https://www.google.com/chrome/beta/"
 
   livecheck do
     url "https://chromiumdash.appspot.com/fetch_releases?channel=Beta&platform=Mac"
-    strategy :page_match
-    regex(/"version": "(\d+(?:\.\d+)*)"/i)
+    regex(/"version": "(\d+(?:\.\d+)+)"/i)
   end
 
   auto_updates true
@@ -26,15 +20,15 @@ cask "google-chrome-beta" do
     "/Library/Caches/com.google.SoftwareUpdate.*",
     "/Library/Google/Google Chrome Brand.plist",
     "/Library/Google/GoogleSoftwareUpdate",
-    "~/Library/Application Support/Google/Chrome Beta",
     "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.google.chrome.app.*.sfl*",
     "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.google.chrome.sfl*",
-    "~/Library/Caches/Google/Chrome Beta",
-    "~/Library/Caches/com.google.Chrome",
+    "~/Library/Application Support/Google/Chrome Beta",
     "~/Library/Caches/com.google.Chrome.helper.*",
-    "~/Library/Caches/com.google.Keystone",
+    "~/Library/Caches/com.google.Chrome",
     "~/Library/Caches/com.google.Keystone.Agent",
+    "~/Library/Caches/com.google.Keystone",
     "~/Library/Caches/com.google.SoftwareUpdate",
+    "~/Library/Caches/Google/Chrome Beta",
     "~/Library/Google/Google Chrome Brand.plist",
     "~/Library/Google/GoogleSoftwareUpdate",
     "~/Library/LaunchAgents/com.google.keystone.agent.plist",

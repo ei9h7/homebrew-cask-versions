@@ -1,25 +1,23 @@
 cask "android-studio-preview-beta" do
-  version "2020.3.1.21"
+  arch = Hardware::CPU.intel? ? "mac" : "mac_arm"
+
+  version "2021.2.1.8"
 
   if Hardware::CPU.intel?
-    sha256 "ae3ff455fdc6c06b83b7701f8daba1af638f33e03265383fb576c8c4ed125bd7"
-
-    url "https://dl.google.com/dl/android/studio/ide-zips/#{version}/android-studio-#{version}-mac.zip",
-        verified: "dl.google.com/dl/android/studio/"
+    sha256 "d33a785ecb55a22063e3a74be48353b4b39e4b686f01e4576150c762bd55fc69"
   else
-    sha256 "a4ea75c0ff7de8ed940fa6e21e7d9b6218057737faa9fcbcefd299f314b5ba1a"
-
-    url "https://dl.google.com/dl/android/studio/ide-zips/#{version}/android-studio-#{version}-mac_arm.zip",
-        verified: "dl.google.com/dl/android/studio/"
+    sha256 "32e523cfd99bf9fd14927f7a3c7d40779d50eb9426046703980e6bed5337db30"
   end
 
+  url "https://dl.google.com/dl/android/studio/ide-zips/#{version}/android-studio-#{version}-#{arch}.zip",
+      verified: "dl.google.com/dl/android/studio/"
   name "Android Studio Preview (Beta)"
   desc "Tools for building Android applications"
   homepage "https://developer.android.com/studio/preview/"
 
   livecheck do
     url :homepage
-    regex(%r{href=.*?/android[._-]studio[._-]v?(\d+(?:\.\d+)+)[._-]mac\.zip[^>]*>[\w\s.-]*?(Beta|RC)}i)
+    regex(%r{href=.*?/android[._-]studio[._-]v?(\d+(?:\.\d+)+)[._-]#{arch}\.zip(.*\n*\s*.*)(Beta|RC)}i)
   end
 
   conflicts_with cask: "android-studio-preview-canary"
@@ -27,14 +25,14 @@ cask "android-studio-preview-beta" do
   app "Android Studio Preview.app"
 
   zap trash: [
+    "~/.android",
     "~/Library/Android/sdk",
     "~/Library/Application Support/Google/AndroidStudioPreview#{version.major_minor}",
     "~/Library/Caches/Google/AndroidStudioPreview#{version.major_minor}",
     "~/Library/Logs/Google/AndroidStudioPreview#{version.major_minor}",
-    "~/Library/Preferences/com.google.android.studio-EAP.plist",
     "~/Library/Preferences/com.android.Emulator.plist",
+    "~/Library/Preferences/com.google.android.studio-EAP.plist",
     "~/Library/Saved Application State/com.google.android.studio-EAP.savedState",
-    "~/.android",
   ],
       rmdir: [
         "~/AndroidStudioProjects",

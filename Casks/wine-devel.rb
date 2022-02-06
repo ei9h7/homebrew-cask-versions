@@ -1,6 +1,6 @@
 cask "wine-devel" do
-  version "6.19"
-  sha256 "add13ca5b304430617ee7fd77f99492f63da817f64b5301bcc15288add3a6818"
+  version "7.1"
+  sha256 "0012bb73c602f74ec9ced675a178bfaecb341b0d8373f07b96dd4adf563ae7cb"
 
   # Current winehq packages are deprecated and these are packages from
   # the new maintainers that will eventually be pushed to Winehq.
@@ -14,7 +14,7 @@ cask "wine-devel" do
   livecheck do
     url "https://github.com/Gcenx/macOS_Wine_builds/releases"
     strategy :page_match
-    regex(/wine[._-]devel[._-]v?(\d+(?:\.\d+)*)[._-]osx64\.tar\.xz/i)
+    regex(/wine[._-]devel[._-]v?(\d+(?:\.\d+)+)[._-]osx64\.tar\.xz/i)
   end
 
   conflicts_with cask: [

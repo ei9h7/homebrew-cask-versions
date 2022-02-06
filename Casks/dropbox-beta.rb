@@ -1,8 +1,15 @@
 cask "dropbox-beta" do
-  version "134.3.4102"
-  sha256 "574f90ea03ac38d6829aab85520360720ed1b05ae2bcc5c38164fe1f9bba00e0"
+  arch = Hardware::CPU.intel? ? "" : "&arch=arm64"
 
-  url "https://www.dropbox.com/download?build=#{version}&plat=mac&type=full",
+  version "142.3.4086"
+
+  if Hardware::CPU.intel?
+    sha256 "44684a81a1557f5d70ebe52502695dcb9e4b472ca600f3196e810574ce1eee4b"
+  else
+    sha256 "afa162683c6a2af649c3c6ec5be17527efee8627815026a2df4ccd58ebc76faf"
+  end
+
+  url "https://www.dropbox.com/download?build=#{version}&plat=mac&type=full#{arch}",
       verified: "dropbox.com/"
   name "Dropbox"
   desc "Client for the Dropbox cloud storage service"
@@ -10,8 +17,7 @@ cask "dropbox-beta" do
 
   livecheck do
     url :homepage
-    strategy :page_match
-    regex(/Beta\sBuild\s(\d+(?:\.\d+)*)/i)
+    regex(/Beta\sBuild\s(\d+(?:\.\d+)+)/i)
   end
 
   auto_updates true
@@ -19,22 +25,28 @@ cask "dropbox-beta" do
 
   app "Dropbox.app"
 
-  uninstall launchctl: "com.dropbox.DropboxMacUpdate.agent"
+  uninstall launchctl: "com.dropbox.DropboxMacUpdate.agent",
+            kext:      "com.getdropbox.dropbox.kext",
+            delete:    [
+              "/Library/DropboxHelperTools",
+              "/Library/Preferences/com.getdropbox.dropbox.dbkextd.plist",
+            ]
 
   zap trash: [
-    "/Library/DropboxHelperTools",
     "~/.dropbox",
     "~/Library/Application Scripts/com.dropbox.foldertagger",
     "~/Library/Application Scripts/com.getdropbox.dropbox.garcon",
     "~/Library/Application Support/Dropbox",
     "~/Library/Caches/CloudKit/com.apple.bird/iCloud.com.getdropbox.Dropbox",
     "~/Library/Caches/com.dropbox.DropboxMacUpdate",
-    "~/Library/Caches/com.getdropbox.DropboxMetaInstaller",
     "~/Library/Caches/com.getdropbox.dropbox",
+    "~/Library/Caches/com.getdropbox.DropboxMetaInstaller",
     "~/Library/Caches/com.plausiblelabs.crashreporter.data/com.dropbox.DropboxMacUpdate",
+    "~/Library/Containers/com.dropbox.activityprovider",
     "~/Library/Containers/com.dropbox.foldertagger",
     "~/Library/Containers/com.getdropbox.dropbox.garcon",
     "~/Library/Dropbox",
+    "~/Library/Group Containers/com.dropbox.client.crashpad",
     "~/Library/Group Containers/com.getdropbox.dropbox.garcon",
     "~/Library/LaunchAgents/com.dropbox.DropboxMacUpdate.agent.plist",
     "~/Library/Logs/Dropbox_debug.log",

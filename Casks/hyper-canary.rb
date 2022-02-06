@@ -1,24 +1,23 @@
 cask "hyper-canary" do
-  version "3.1.0-canary.6"
+  arch = Hardware::CPU.intel? ? "x64" : "arm64"
+
+  version "3.3.0-canary.1"
 
   if Hardware::CPU.intel?
-    sha256 "033735bec4cef2796e5c40d84b186843941347a768fdbb3d1323c9bc4379ebd3"
-    url "https://github.com/vercel/hyper/releases/download/v#{version}/Hyper-#{version}-mac-x64.zip",
-        verified: "github.com/vercel/hyper/"
+    sha256 "5168faa9762977594d386ae17b33e3c00e04a4b036fd319ad28e3d1c0247dad4"
   else
-    sha256 "d2cd7409dbc1454bc5c67454228572f8c27ef9e5434893f8d1bc81b9613441e0"
-    url "https://github.com/vercel/hyper/releases/download/v#{version}/Hyper-#{version}-mac-arm64.zip",
-        verified: "github.com/vercel/hyper/"
+    sha256 "d5d8265328e489846a2c6bfb24c77ae1538f337132eb9ef5ac4acd6be75eeabc"
   end
 
+  url "https://github.com/vercel/hyper/releases/download/v#{version}/Hyper-#{version}-mac-#{arch}.zip",
+      verified: "github.com/vercel/hyper/"
   name "Hyper"
   desc "Terminal built on web technologies"
   homepage "https://hyper.is/"
 
   livecheck do
     url "https://releases-canary.hyper.is/"
-    strategy :page_match
-    regex(/hyper-(\d+(?:\.\d+)*.+)-mac-x64\.zip/i)
+    regex(/hyper-(\d+(?:\.\d+)*.+)-mac-#{arch}\.zip/i)
   end
 
   auto_updates true
@@ -28,17 +27,17 @@ cask "hyper-canary" do
   binary "#{appdir}/Hyper.app/Contents/Resources/bin/hyper"
 
   zap trash: [
-    "~/.hyper.js",
     "~/.hyper_plugins",
-    "~/Library/Application Support/Hyper",
+    "~/.hyper.js",
     "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/co.zeit.hyper.sfl*",
-    "~/Library/Caches/co.zeit.hyper",
+    "~/Library/Application Support/Hyper",
     "~/Library/Caches/co.zeit.hyper.ShipIt",
+    "~/Library/Caches/co.zeit.hyper",
     "~/Library/Cookies/co.zeit.hyper.binarycookies",
     "~/Library/Logs/Hyper",
     "~/Library/Preferences/ByHost/co.zeit.hyper.ShipIt.*.plist",
-    "~/Library/Preferences/co.zeit.hyper.plist",
     "~/Library/Preferences/co.zeit.hyper.helper.plist",
+    "~/Library/Preferences/co.zeit.hyper.plist",
     "~/Library/Saved Application State/co.zeit.hyper.savedState",
   ]
 end

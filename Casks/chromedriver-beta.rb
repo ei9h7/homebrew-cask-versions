@@ -1,6 +1,6 @@
 cask "chromedriver-beta" do
-  version "95.0.4638.17"
-  sha256 "88821a2f7eade0d6489d10b1aa90684e8b7511900709f2a42d7fe08e441c876e"
+  version "99.0.4844.17"
+  sha256 "5c3f3f755777d4002f502bfe27489ac1ce4725ac0e9c06c507dc6a806223dce0"
 
   url "https://chromedriver.storage.googleapis.com/#{version}/chromedriver_mac64.zip",
       verified: "chromedriver.storage.googleapis.com/"
@@ -10,7 +10,7 @@ cask "chromedriver-beta" do
 
   livecheck do
     url :homepage
-    regex(/Latest\s*beta\s*release:.*?ChromeDriver\s*v?(\d+(?:\.\d+)+)/i)
+    regex(/ChromeDriver\s(\d+(?:\.\d+)+)/i)
   end
 
   conflicts_with cask: "chromedriver"

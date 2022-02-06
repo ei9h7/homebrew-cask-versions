@@ -1,49 +1,37 @@
 cask "dotnet-preview" do
+  arch = Hardware::CPU.intel? ? "x64" : "arm64"
+
   if Hardware::CPU.intel?
-    version "6.0.0-rc.2.21480.5,39fb50be-17b9-45b2-9f3e-eb03e31b8219:3f67fc8d06a1d163ac817cd116fd4719"
-    sha256 "347f22634d9cf3867cf573efda35359313a0558c399128f3a1b25f1eaf2aa7e3"
-
-    url "https://download.visualstudio.microsoft.com/download/pr/#{version.after_comma.before_colon}/#{version.after_colon}/dotnet-runtime-#{version.before_comma}-osx-x64.pkg"
-    pkg "dotnet-runtime-#{version.before_comma}-osx-x64.pkg"
-
-    livecheck do
-      url "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/#{version.major_minor}/releases.json"
-      regex(%r{/download/pr/([^/]+)/([^/]+)/dotnet-runtime-v?(.+)-osx-x64\.pkg}i)
-      strategy :page_match do |page, regex|
-        page.scan(regex).map do |match|
-          "#{match[2]},#{match[0]}:#{match[1]}"
-        end
-      end
-    end
+    version "6.0.1,6824b342-4659-40a1-ab73-25dd43e5e225,e57b1bfa437cf152f2d7064246bfb653"
+    sha256 "0be7228ce53c4766d19b48afad0769d1b420c5c4f38a81e5cae37aa3ed72cdbc"
   else
-    version "6.0.0-rc.2.21480.5,2ac2aeec-4262-41e1-9544-8fc21579952c:8bfe416a0ce0b43b354481cacaa57f35"
-    sha256 "e2287e63599895c7560f609a176eb88d7a32096e18dde5c5f3f0c96bfd1cf09d"
-
-    url "https://download.visualstudio.microsoft.com/download/pr/#{version.after_comma.before_colon}/#{version.after_colon}/dotnet-runtime-#{version.before_comma}-osx-arm64.pkg"
-    pkg "dotnet-runtime-#{version.before_comma}-osx-arm64.pkg"
-
-    livecheck do
-      url "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/#{version.major_minor}/releases.json"
-      regex(%r{/download/pr/([^/]+)/([^/]+)/dotnet-runtime-v?(.+)-osx-arm64\.pkg}i)
-      strategy :page_match do |page, regex|
-        page.scan(regex).map do |match|
-          "#{match[2]},#{match[0]}:#{match[1]}"
-        end
-      end
-    end
+    version "6.0.1,51646583-741c-481e-b598-f13dc719cdf4,3adaa0faa24326fd7cc2265e957339bf"
+    sha256 "5c8ac515cf93cd8ac11f4c2baff2c23a1c10fed359e4979db60233f6a0c79133"
   end
 
+  url "https://download.visualstudio.microsoft.com/download/pr/#{version.csv[1]}/#{version.csv[2]}/dotnet-runtime-#{version.csv[0]}-osx-#{arch}.pkg"
   name ".Net Runtime"
   desc "Developer platform"
   homepage "https://www.microsoft.com/net/core#macos"
+
+  livecheck do
+    url "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/#{version.major_minor}/releases.json"
+    regex(%r{/download/pr/([^/]+)/([^/]+)/dotnet-runtime-v?(.+)-osx-#{arch}\.pkg}i)
+    strategy :page_match do |page, regex|
+      page.scan(regex).map do |match|
+        "#{match[2]},#{match[0]},#{match[1]}"
+      end
+    end
+  end
 
   conflicts_with cask: [
     "dotnet",
     "dotnet-sdk",
     "dotnet-sdk-preview",
-  ]
+  ], formula: "dotnet"
   depends_on macos: ">= :mojave"
 
+  pkg "dotnet-runtime-#{version.csv[0]}-osx-#{arch}.pkg"
   binary "/usr/local/share/dotnet/dotnet"
 
   uninstall pkgutil: "com.microsoft.dotnet.*",

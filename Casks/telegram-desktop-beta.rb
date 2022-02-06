@@ -1,6 +1,6 @@
 cask "telegram-desktop-beta" do
-  version "3.1.7"
-  sha256 "971a5be2ba72223a9e901cc4f2a13e4838fd21a93ce358d4b33a7323ffbdcd98"
+  version "3.4.6"
+  sha256 "c24d0d0da9afa787652e147e1cafa6441d72207c7932a33ee171de2511b979b4"
 
   url "https://updates.tdesktop.com/tmac/tsetup.#{version}.beta.dmg",
       verified: "updates.tdesktop.com/tmac"
@@ -11,7 +11,7 @@ cask "telegram-desktop-beta" do
   livecheck do
     url "https://telegram.org/dl/desktop/mac?beta=1"
     strategy :header_match
-    regex(/tsetup.(\d+(?:\.\d+)*)\.beta.dmg/i)
+    regex(/tsetup.(\d+(?:\.\d+)+)\.beta.dmg/i)
   end
 
   auto_updates true

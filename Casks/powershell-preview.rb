@@ -1,6 +1,6 @@
 cask "powershell-preview" do
-  version "7.2.0-preview.10"
-  sha256 "665d8297c7537e506b44ab99e5a5eef04933dd49bbc5c5ae38fcecb7694d4ab5"
+  version "7.3.0-preview.1"
+  sha256 "38918d554045953f353107da900239305ceb00bc209c70d9306bd33aaeb51e5c"
 
   url "https://github.com/PowerShell/PowerShell/releases/download/v#{version}/powershell-#{version}-osx-x64.pkg"
   name "PowerShell"
@@ -30,4 +30,9 @@ cask "powershell-preview" do
         "~/.local",
         "~/.local/share",
       ]
+
+  caveats <<~EOS
+    To use Homebrew in PowerShell, set:
+      Add-Content -Path $PROFILE.CurrentUserAllHosts -Value '$(#{HOMEBREW_PREFIX}/bin/brew shellenv) | Invoke-Expression'
+  EOS
 end

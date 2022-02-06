@@ -1,24 +1,23 @@
 cask "microsoft-edge-dev" do
-  version "96.0.1043.1"
+  folder = Hardware::CPU.intel? ? "C1297A47-86C4-4C1F-97FA-950631F94777" : "03adf619-38c6-4249-95ff-4a01c0ffc962"
+  linkid = Hardware::CPU.intel? ? "2069340" : "2099619"
+
+  version "99.0.1150.2"
 
   if Hardware::CPU.intel?
-    sha256 "faa412b9b6158846515e88923f93b095b78e3133dd542239b3f1cc1d1cd4b47e"
-
-    url "https://officecdn-microsoft-com.akamaized.net/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/MicrosoftEdgeDev-#{version}.pkg",
-        verified: "officecdn-microsoft-com.akamaized.net/"
+    sha256 "83ad6f68b74e6c56b41ef050dd8938920225956d5feac6387f5c498ea4615ca8"
   else
-    sha256 "ad1297cbecb963144795e35761c89f12984fa872076dc408cf739f99055891b2"
-
-    url "https://officecdn-microsoft-com.akamaized.net/pr/03adf619-38c6-4249-95ff-4a01c0ffc962/MacAutoupdate/MicrosoftEdgeDev-#{version}.pkg",
-        verified: "officecdn-microsoft-com.akamaized.net/"
+    sha256 "57e11accfbd96fdd133f86beddf0239802ab5d3033c5acfb501c03432e7680b2"
   end
 
+  url "https://officecdn-microsoft-com.akamaized.net/pr/#{folder}/MacAutoupdate/MicrosoftEdgeDev-#{version}.pkg",
+      verified: "officecdn-microsoft-com.akamaized.net/"
   name "Microsoft Edge Dev"
   desc "Multi-platform web browser"
   homepage "https://www.microsoftedgeinsider.com/"
 
   livecheck do
-    url "https://go.microsoft.com/fwlink/?linkid=2069340"
+    url "https://go.microsoft.com/fwlink/?linkid=#{linkid}"
     strategy :header_match
   end
 

@@ -1,8 +1,8 @@
 cask "qgis-ltr" do
-  version "3.16.11,20210910_192934"
-  sha256 "6d0954429cc67d5eed684de5d1d728464d8da23300d42116e2f6c774f9b89a52"
+  version "3.16.16,20220114_200150"
+  sha256 "3eec5da343d95f00ab8c13c018f2e15347004fdd5691a04beffe06756568ad91"
 
-  url "https://qgis.org/downloads/macos/ltr/qgis_ltr_final-#{version.before_comma.dots_to_underscores}_#{version.after_comma}.dmg"
+  url "https://qgis.org/downloads/macos/ltr/qgis_ltr_final-#{version.csv.first.dots_to_underscores}_#{version.csv.second}.dmg"
   name "QGIS LTR"
   desc "Geographic Information System"
   homepage "https://www.qgis.org/"
@@ -11,6 +11,8 @@ cask "qgis-ltr" do
     url "https://qgis.org/downloads/macos/qgis-macos-ltr.sha256sum"
     strategy :page_match do |page|
       match = page.match(/qgis_ltr_final[._-]v?(\d+(?:_\d+)+)[._-](\d+_\d+)\.dmg/i)
+      next if match.blank?
+
       "#{match[1].tr("_", ".")},#{match[2]}"
     end
   end

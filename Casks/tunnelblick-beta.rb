@@ -1,8 +1,8 @@
 cask "tunnelblick-beta" do
-  version "3.8.7beta02,5730"
-  sha256 "f5d38cb9608fac0f60df777f3dcfcfc4a33a6a4df04a48d3bef6713160356d5b"
+  version "3.8.8beta03,5790"
+  sha256 "1288e770f23fe098d73225a1f4ddfca6d3b2b6384ac8bcf7be30351799870eb2"
 
-  url "https://github.com/Tunnelblick/Tunnelblick/releases/download/v#{version.before_comma}/Tunnelblick_#{version.before_comma}_build_#{version.after_comma}.dmg",
+  url "https://github.com/Tunnelblick/Tunnelblick/releases/download/v#{version.csv.first}/Tunnelblick_#{version.csv.first}_build_#{version.csv.second}.dmg",
       verified: "github.com/Tunnelblick/Tunnelblick/"
   name "Tunnelblick"
   desc "Free and open source graphic user interface for OpenVPN"
@@ -13,6 +13,8 @@ cask "tunnelblick-beta" do
     regex(%r{href=.*?/Tunnelblick_(\d+(?:\.\d+)*beta(?:\d+))_build_(\d+)\.dmg}i)
     strategy :page_match do |page, regex|
       match = page.match(regex)
+      next if match.blank?
+
       "#{match[1]},#{match[2]}"
     end
   end

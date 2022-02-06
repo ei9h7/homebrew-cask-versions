@@ -1,68 +1,68 @@
 cask "firefox-esr" do
-  version "91.2.0"
+  version "91.5.1"
 
   language "cs" do
-    sha256 "58ed0838da835004b9344e82a9fbc06136c32949dbcc2145014d5b465ced53e3"
+    sha256 "5e990dd66384fc5dcdc74bbfb6ac0da6537e255df644465d0108a91e2aead7aa"
     "cs"
   end
   language "de" do
-    sha256 "da1f5b51978bbd1575da859a106ea3369f7a1ce6bcfbc7a1861df23f89364fdc"
+    sha256 "14f25d5908c972d3ee94b288eadaca7401e2db68b43458d974e5a61acf02fa0c"
     "de"
   end
   language "en-CA" do
-    sha256 "e74124904893e0f458c384a531283eacda1d39988a1df82d12c28625e83489a1"
+    sha256 "aed308e3cabc96b913827b44eefb106a3eb193f90e358b9ea4746778887817ba"
     "en-CA"
   end
   language "en-GB" do
-    sha256 "b5a6dea5c3852e1053fb64619549e06833d0a845ab154cf3e3532b5bd70035d4"
+    sha256 "153c3f030581c61ae06c38b122d7cc7a8edb2f99b964f26c9c190c4555f67d9b"
     "en-GB"
   end
   language "en", default: true do
-    sha256 "79fbb64232ca63187177d6dd488b8a39f9c055eea6a0a512b586c8a2a16e8131"
+    sha256 "573d3fe8d1d1a85306bc324c52e495efb11c05cd4e9bd97ac5a7d8c887f30b90"
     "en-US"
   end
   language "fr" do
-    sha256 "74bf521233d62deeb642b39deed5c2d066ae04896474d3466ae08abdeaff8a8a"
+    sha256 "8d846b7f89b26c82b70900878170622c9ce0322d4422337c98f7aabde56c8a35"
     "fr"
   end
   language "gl" do
-    sha256 "6cfb985e52a2b3ee94e1281844eba4ebd33446e131ff7731b7599d3968761045"
+    sha256 "223bd866238d2eb5edfd1e5225a1a0e9f272cc2441392835181da76faefeee56"
     "gl"
   end
   language "it" do
-    sha256 "191d1ca756bf5fdc398083917a646a8eaf24a881eb8f65b4ab97da232ad738d8"
+    sha256 "f8a7d88414aaa63795248bb4508aca6c8877d49cc4d8f9cb38c9e26699803df8"
     "it"
   end
   language "ja" do
-    sha256 "2d200205de9afa1f3ff80333de732dcea5297a4a2246132ceded769f751aa37f"
+    sha256 "39e80a48dbbf849736bbf21925047636e10eff7222db07202c4872624e1c0af3"
     "ja-JP-mac"
   end
   language "nl" do
-    sha256 "131dacb9d74165a27ccf013f3d4c3cc68c3ae03f5d78e90c1cba49d24191b8a4"
+    sha256 "d7a6f8ca68e69fbe176b7f5a0bc05df28544e66c6ec7ac9a184938a0eceaaabc"
     "nl"
   end
   language "pl" do
-    sha256 "0189503ff4b192c251d887b51069ce15e534d9990ae502aaf3b87a1d5cc41d2c"
+    sha256 "9e853451d4864d9170440f9c9aeb6ae6e93b0bddb127ec81a00329f2af621963"
     "pl"
   end
   language "pt" do
-    sha256 "d3a12a5d76c6333ef880a76fe5a6fd5e9a7c971dfd73f517a999b61f3418fc81"
+    sha256 "3cfb55fe0af8a398c035f76af9462528aa0527b8716829dc3637a696d5f78829"
     "pt-PT"
   end
   language "ru" do
-    sha256 "edc530ce9d384a7927b913b5572cc80ccd794817c2fa3d375fa374eac5dff90f"
+    sha256 "81973951a338961679768400051ae5992d0bbf5a5338f46a21da12bb75a16d9d"
     "ru"
   end
   language "uk" do
-    sha256 "696cb60fd8b6650f4c38674e4785b80a14ad9b846875e3bab3199fb87b7bdc8a"
+    sha256 "00280c939c33827e3b7a0739e5e65828c5ef43633640d91f6aafafdc1279c7f0"
     "uk"
   end
   language "zh-TW" do
-    sha256 "068f06921172e6f8460397d273767fd8b0aabefb622eea7c50fe7e3dd5a15f08"
+    sha256 "8c1cf902092f1ba78d211864731650bf4b83336f92faf631860fa3aa6e501ea4"
     "zh-TW"
   end
   language "zh" do
-    sha256 "dded51cfe9846abf2b081081fb4e4ed216e97d493aab637d1b630840b9101379"
+    sha256 "ae7fce8a948e290d8e06f52ed350f130dbb497a497b12eba67a9cb46bcf36580"
     "zh-CN"
   end
 
@@ -86,14 +86,18 @@ cask "firefox-esr" do
 
   app "Firefox.app"
 
+  uninstall quit:   "org.mozilla.firefox",
+            delete: "/Library/Logs/DiagnosticReports/firefox_*"
+
   zap trash: [
-    "/Library/Logs/DiagnosticReports/firefox_*",
-    "~/Library/Application Support/Firefox",
     "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/org.mozilla.firefox.sfl*",
     "~/Library/Application Support/CrashReporter/firefox_*",
+    "~/Library/Application Support/Firefox",
     "~/Library/Caches/Firefox",
     "~/Library/Caches/Mozilla/updates/Applications/Firefox",
+    "~/Library/Caches/org.mozilla.crashreporter",
     "~/Library/Caches/org.mozilla.firefox",
+    "~/Library/Preferences/org.mozilla.crashreporter.plist",
     "~/Library/Preferences/org.mozilla.firefox.plist",
     "~/Library/Saved Application State/org.mozilla.firefox.savedState",
     "~/Library/WebKit/org.mozilla.firefox",

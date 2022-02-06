@@ -2,21 +2,18 @@ cask "little-snitch4" do
   if MacOS.version <= :mojave
     version "4.5.2"
     sha256 "52116bb4e5186fed441c7cab835b4dd822243248f402334b486f0c7b20062c13"
-    url "https://obdev.at/downloads/littlesnitch/legacy/LittleSnitch-#{version}.dmg"
   else
-    version "4.6"
-    sha256 "47475aae4ba506f01b0399552c0d3362cb2ecbf0df95cf27aded5d685a4f875d"
-    url "https://www.obdev.at/downloads/littlesnitch/LittleSnitch-#{version}.dmg"
+    version "4.6.1"
+    sha256 "bb4c609b0a0c353d42f99f00513cb653acdf6d8c857930f146475ed89a46ff82"
   end
-
+  url "https://www.obdev.at/downloads/littlesnitch/legacy/LittleSnitch-#{version}.dmg"
   name "Little Snitch"
   desc "Host-based application firewall"
   homepage "https://www.obdev.at/products/littlesnitch/index.html"
 
   livecheck do
     url "https://www.obdev.at/products/littlesnitch/releasenotes#{version.major}.html"
-    strategy :page_match
-    regex(/Little\sSnitch\s(\d+(?:\.\d+)*)/i)
+    regex(/Little\sSnitch\s(\d+(?:\.\d+)+)/i)
   end
 
   auto_updates true
@@ -32,9 +29,9 @@ cask "little-snitch4" do
   installer manual: "LittleSnitch-#{version}.dmg"
 
   uninstall launchctl: [
-    "at.obdev.LittleSnitchUIAgent",
-    "at.obdev.LittleSnitchHelper",
     "at.obdev.littlesnitchd",
+    "at.obdev.LittleSnitchHelper",
+    "at.obdev.LittleSnitchUIAgent",
   ]
 
   zap trash: [

@@ -1,6 +1,6 @@
 cask "lilypond-dev" do
-  version "2.23.3-1"
-  sha256 "46113d7edc432297012e71ad66db88f909b8fdca3c1a5baca8560e1efbae17d0"
+  version "2.23.5-1"
+  sha256 "e4b923f45c34d754fac89b73c0aa555b529e89ea2e8a46475ef0e291e80a0c6d"
 
   url "https://lilypond.org/downloads/binaries/darwin-x86/lilypond-#{version}.darwin-x86.tar.bz2"
   name "LilyPond"
@@ -9,9 +9,10 @@ cask "lilypond-dev" do
 
   livecheck do
     url "https://lilypond.org/development.html"
-    strategy :page_match
-    regex(%r{href=.*?/lilypond-(\d+(?:\.\d+)*(?:-\d+)?)\.darwin-x86\.tar\.bz2}i)
+    regex(%r{href=.*?/lilypond[._-]v?(\d+(?:\.\d+)*(?:-\d+)?)\.darwin[._-]x86\.tar\.bz2}i)
   end
+
+  conflicts_with cask: "lilypond"
 
   app "LilyPond.app"
 
@@ -38,7 +39,7 @@ cask "lilypond-dev" do
   end
 
   zap trash: [
-    "~/Library/Preferences/org.lilypond.lilypond.plist",
     "~/Library/Preferences/org.lilypond.lilypond.LSSharedFileList.plist",
+    "~/Library/Preferences/org.lilypond.lilypond.plist",
   ]
 end

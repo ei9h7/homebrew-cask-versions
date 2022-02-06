@@ -1,8 +1,8 @@
 cask "daedalus-flight" do
-  version "4.4.0,19288"
-  sha256 "ea5154f0e754ef5a8c11692bb0a692c9b98d2e1fa59dfdcdd49f1d583b7f1568"
+  version "4.8.0-FC1,20476"
+  sha256 "ed47607b8cf89337a177d40c86c91d0e835f91d3f7687bc40fbe604cc40c25fb"
 
-  url "https://update-cardano-mainnet-flight.iohk.io/daedalus-#{version.before_comma}-mainnet_flight-#{version.after_comma}.pkg",
+  url "https://update-cardano-mainnet-flight.iohk.io/daedalus-#{version.csv.first}-mainnet_flight-#{version.csv.second}.pkg",
       verified: "update-cardano-mainnet-flight.iohk.io/"
   name "Daedalus Flight"
   desc "Pre-release of Daedalus cryptocurrency wallet for ada on the Cardano blockchain"
@@ -12,6 +12,8 @@ cask "daedalus-flight" do
     url "https://update-cardano-mainnet-flight.iohk.io/daedalus-latest-version.json"
     strategy :page_match do |page|
       match = page.match(%r{/daedalus-(\d+(?:\.\d+)*(?:-FC\d*)?)-mainnet_flight-(\d+)\.pkg}i)
+      next if match.blank?
+
       "#{match[1]},#{match[2]}"
     end
   end
@@ -19,7 +21,7 @@ cask "daedalus-flight" do
   auto_updates true
   depends_on macos: ">= :high_sierra"
 
-  pkg "daedalus-#{version.before_comma}-mainnet_flight-#{version.after_comma}.pkg"
+  pkg "daedalus-#{version.csv.first}-mainnet_flight-#{version.csv.second}.pkg"
 
   uninstall pkgutil: "org.Daedalusmainnet_flight.pkg"
 

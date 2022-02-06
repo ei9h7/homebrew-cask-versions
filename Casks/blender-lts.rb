@@ -1,21 +1,22 @@
 cask "blender-lts" do
-  version "2.93.5"
+  arch = Hardware::CPU.intel? ? "x64" : "arm64"
+
+  version "2.93.8"
 
   if Hardware::CPU.intel?
-    sha256 "08c929f2fcbde0233947b183e8cf53e5595b8f9eedcac749b2828a713ceb9ce0"
-    url "https://download.blender.org/release/Blender#{version.major_minor}/blender-#{version}-macos-x64.dmg"
+    sha256 "221ca9d756f6494e94967c925e014f250d141ada34eb40276e82165f0eea5f1f"
   else
-    sha256 "4435bf05591ebeb3dcb5f9071e3fc5d10417fc04c1901e4d2073994f2cd37b06"
-    url "https://download.blender.org/release/Blender#{version.major_minor}/blender-#{version}-macos-arm64.dmg"
+    sha256 "c2e9419585865c42401ca456d27f51c7f4f5d0b9f3fe565d0a5faded8f3e6e40"
   end
 
+  url "https://download.blender.org/release/Blender#{version.major_minor}/blender-#{version}-macos-#{arch}.dmg"
   name "Blender"
   desc "Free and open-source 3D creation suite"
   homepage "https://www.blender.org/"
 
   livecheck do
     url "https://www.blender.org/download/lts/"
-    regex(%r{href=.*?/blender[._-]v?(\d+(?:\.\d+)+)-macOS-x64\.dmg}i)
+    regex(%r{href=.*?/blender[._-]v?(\d+(?:\.\d+)+)-macOS-#{arch}\.dmg}i)
     strategy :page_match do |page, regex|
       minor_version = page[%r{href=["'].*/download/lts/(\d+(?:[.-]\d+)+)/["' >]}i, 1]
       next [] if minor_version.blank?
@@ -28,6 +29,7 @@ cask "blender-lts" do
   end
 
   conflicts_with cask: "blender"
+  depends_on macos: ">= :high_sierra"
 
   app "Blender.app"
   # shim script (https://github.com/Homebrew/homebrew-cask/issues/18809)

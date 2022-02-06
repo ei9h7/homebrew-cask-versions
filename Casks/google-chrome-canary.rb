@@ -1,21 +1,15 @@
 cask "google-chrome-canary" do
-  version "97.0.4669.2"
+  version "100.0.4868.0"
   sha256 :no_check
 
-  if Hardware::CPU.intel?
-    url "https://dl.google.com/chrome/mac/canary/googlechromecanary.dmg"
-  else
-    url "https://dl.google.com/chrome/mac/universal/canary/googlechromecanary.dmg"
-  end
-
+  url "https://dl.google.com/chrome/mac/universal/canary/googlechromecanary.dmg"
   name "Google Chrome Canary"
   desc "Web browser"
   homepage "https://www.google.com/chrome/canary/"
 
   livecheck do
     url "https://chromiumdash.appspot.com/fetch_releases?channel=Canary&platform=Mac"
-    strategy :page_match
-    regex(/"version": "(\d+(?:\.\d+)*)"/i)
+    regex(/"version": "(\d+(?:\.\d+)+)"/i)
   end
 
   auto_updates true
@@ -26,15 +20,15 @@ cask "google-chrome-canary" do
     "/Library/Caches/com.google.SoftwareUpdate.*",
     "/Library/Google/Google Chrome Brand.plist",
     "/Library/Google/GoogleSoftwareUpdate",
-    "~/Library/Application Support/Google/Chrome Canary",
     "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.google.chrome.app.*.sfl*",
     "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.google.chrome.sfl*",
-    "~/Library/Caches/Google/Chrome Canary",
-    "~/Library/Caches/com.google.Chrome",
+    "~/Library/Application Support/Google/Chrome Canary",
     "~/Library/Caches/com.google.Chrome.helper.*",
-    "~/Library/Caches/com.google.Keystone",
+    "~/Library/Caches/com.google.Chrome",
     "~/Library/Caches/com.google.Keystone.Agent",
+    "~/Library/Caches/com.google.Keystone",
     "~/Library/Caches/com.google.SoftwareUpdate",
+    "~/Library/Caches/Google/Chrome Canary",
     "~/Library/Google/Google Chrome Brand.plist",
     "~/Library/Google/GoogleSoftwareUpdate",
     "~/Library/LaunchAgents/com.google.keystone.agent.plist",

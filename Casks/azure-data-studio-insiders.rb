@@ -1,8 +1,8 @@
 cask "azure-data-studio-insiders" do
-  version "1.33.0,16fb0dd4eb61e90809400711679e2a8c17693afe"
-  sha256 "4987ace1725a0d3c2214bc0d172c208efd24168d02064535df06c31858e995b3"
+  version "1.35.0,83c6eee8e284d5514eb8c98ce56ce03621434811"
+  sha256 "0ada96fc8c71bdf2ddff9f1171482a546738810d9ae112df42442124d373be96"
 
-  url "https://sqlopsbuilds.azureedge.net/insider/#{version.after_comma}/azuredatastudio-macos-#{version.before_comma}-insider.zip",
+  url "https://sqlopsbuilds.azureedge.net/insider/#{version.csv.second}/azuredatastudio-macos-#{version.csv.first}-insider.zip",
       verified: "sqlopsbuilds.azureedge.net/insider/"
   name "Azure Data Studio - Insiders"
   desc "Data management tool that enables working with SQL Server"
@@ -11,8 +11,10 @@ cask "azure-data-studio-insiders" do
   livecheck do
     url "https://azuredatastudio-update.azurewebsites.net/api/update/darwin/insider/VERSION"
     strategy :page_match do |page|
-      name = page[/"name":"(\d+(?:\.\d+)*)/i, 1]
+      name = page[/"name":"(\d+(?:\.\d+)+)/i, 1]
       version = page[/"version":"(\w+)/i, 1]
+      next if name.blank? || version.blank?
+
       "#{name},#{version}"
     end
   end

@@ -1,26 +1,24 @@
 cask "ferdi-beta" do
-  version "5.6.3-beta.1"
+  arch = Hardware::CPU.intel? ? "" : "-arm64"
+
+  version "5.7.0"
 
   if Hardware::CPU.intel?
-    sha256 "4825fbbcf4a7016f8722ea476a3d521d7ac88fcb744f7f899f61f07cfdf554d8"
-
-    url "https://github.com/getferdi/ferdi/releases/download/v#{version}/Ferdi-#{version}.dmg",
-        verified: "github.com/getferdi/ferdi/"
+    sha256 "623878dfe612a668839b42b1803ff34a3cf4f56e06aa641f76ba81e69eadeb63"
   else
-    sha256 "92a1c2e6d4015395be43b2261fa1e06f9074c0252c57f338b997dcccf0091ba8"
-
-    url "https://github.com/getferdi/ferdi/releases/download/v#{version}/Ferdi-#{version}-arm64.dmg",
-        verified: "github.com/getferdi/ferdi/"
+    sha256 "dba836299ec62bfbdf62451f55808f0e8975bacfe65d6b8d97512d1e4ec255c7"
   end
 
+  url "https://github.com/getferdi/ferdi/releases/download/v#{version}/Ferdi-#{version}#{arch}.dmg",
+      verified: "github.com/getferdi/ferdi/"
   name "Ferdi"
   desc "Messaging browser which combines several services"
   homepage "https://getferdi.com/"
 
   livecheck do
-    url "https://github.com/getferdi/ferdi/releases/"
-    strategy :page_match
-    regex(/Ferdi[._-](\d+(?:\.\d+)*((?:[._-]beta)?)*([._-]\d+)?)\.dmg/i)
+    url :url
+    strategy :git
+    regex(/^v?(\d+(?:\.\d+)*((?:[._-]beta)?)*([._-]\d+)?)$/i)
   end
 
   auto_updates true

@@ -1,12 +1,16 @@
 cask "sonos-s1-controller" do
-  version "11.2.10"
-  sha256 "571ed7e918d7b857acc1d7ce605ee6745cd71318f4586a866f9ffbe7bcb62dc0"
+  version "11.3,57.10.25040"
+  sha256 "ca58d868c0000ee72316a3ee52b9ea4c6d9eabb3d0e06c96fc8649b4975388b1"
 
-  url "https://update.sonos.com/software/mac/mdcr/SonosDesktopController#{version.no_dots}.dmg"
-  appcast "https://macupdater.net/cgi-bin/check_urls/check_url_redirect.cgi?url=https://www.sonos.com/en/redir/controller_software_mac",
-          must_contain: version.no_dots
+  url "https://update.sonos.com/software/mac/mdcr/SonosDesktopController#{version.csv.first.no_dots}.dmg"
   name "Sonos S1"
+  desc "Controller for Gen 1 Sonos products"
   homepage "https://www.sonos.com/"
+
+  livecheck do
+    url "https://www.sonos.com/en/redir/controller_software_mac"
+    strategy :extract_plist
+  end
 
   auto_updates true
 

@@ -1,8 +1,15 @@
 cask "signal-beta" do
-  version "5.20.0-beta.1"
-  sha256 "c7cb8361aa2e8d14cf15d22b59cccd3ac69f35099a094677500c3513839671f2"
+  arch = Hardware::CPU.intel? ? "x64" : "arm64"
 
-  url "https://updates.signal.org/desktop/signal-desktop-beta-mac-#{version}.dmg"
+  version "5.31.0-beta.1"
+
+  if Hardware::CPU.intel?
+    sha256 "ee976765b98ac22281bed83354d394c0048a6c65eab8e1bb3ef3818e1f1042ce"
+  else
+    sha256 "019ccb0465a84e9d21eb80502276315017d6d224fe721968c32d54962e12318e"
+  end
+
+  url "https://updates.signal.org/desktop/signal-desktop-beta-mac-#{arch}-#{version}.dmg"
   name "Signal Beta"
   desc "Instant messaging application focusing on security"
   homepage "https://signal.org/"

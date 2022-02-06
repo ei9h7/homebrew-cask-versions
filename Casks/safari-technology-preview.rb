@@ -1,13 +1,13 @@
 cask "safari-technology-preview" do
   if MacOS.version <= :big_sur
-    version "133,002-07112-20210929-4d3827b5-bcc2-467f-9bea-c99639cc1cda"
-    sha256 "9b9578f186e307d1a95765c35b015f61c6ea7f0b06fc305afbf8c96b02283961"
+    version "139,002-57185-20220126-79EAC0D9-22A9-4371-8D67-7EC97D934766"
+    sha256 "50ef5f5e87eeb4c246e2d8989b3fed73b4d4a14275bc5f23d9923f0b2dc6fe40"
   else
-    version "133,002-06914-20210929-5ee8c8d9-eda3-4302-b5f7-85c516c1416a"
-    sha256 "a60eaee39ffea03ee8be7d1bd2da26fe81962d0d591584fa461f755bf411b3f5"
+    version "139,002-60096-20220127-D9596B7C-FCA5-4751-AA0D-F06001EF09D3"
+    sha256 "3d684e6cb77a3e809ce6e36ef79d0ea79fea8cadb72c8b682a5db02479048927"
   end
 
-  url "https://secure-appldnld.apple.com/STP/#{version.after_comma}/SafariTechnologyPreview.dmg"
+  url "https://secure-appldnld.apple.com/STP/#{version.csv.second}/SafariTechnologyPreview.dmg"
   name "Safari Technology Preview"
   desc "Web browser"
   homepage "https://developer.apple.com/safari/download/"
@@ -30,12 +30,21 @@ cask "safari-technology-preview" do
 
   pkg "Safari Technology Preview.pkg"
 
-  uninstall delete: "/Applications/Safari Technology Preview.app"
+  uninstall quit:      "com.apple.SafariTechnologyPreview",
+            launchctl: "com.apple.SafariTechnologyPreview.History",
+            delete:    "/Applications/Safari Technology Preview.app"
 
   zap trash: [
+    "~/Library/Application Scripts/com.apple.SafariTechnologyPreview.CacheDeleteExtension",
+    "~/Library/Application Scripts/com.apple.SafariTechnologyPreview.DiagnosticExtension",
+    "~/Library/Application Scripts/com.apple.SafariTechnologyPreview",
     "~/Library/Application Support/com.apple.sharedfilelist/com.apple.LSSharedFileList.ApplicationRecentDocuments/com.apple.safaritechnologypreview.sfl*",
     "~/Library/Caches/com.apple.SafariTechnologyPreview",
+    "~/Library/Containers/com.apple.SafariTechnologyPreview.CacheDeleteExtension",
+    "~/Library/Containers/com.apple.SafariTechnologyPreview.DiagnosticExtension",
+    "~/Library/Containers/com.apple.SafariTechnologyPreview",
     "~/Library/Preferences/com.apple.SafariTechnologyPreview.plist",
+    "~/Library/Preferences/com.apple.SafariTechnologyPreview.SandboxBroker.plist",
     "~/Library/SafariTechnologyPreview",
     "~/Library/Saved Application State/com.apple.SafariTechnologyPreview.savedState",
     "~/Library/SyncedPreferences/com.apple.SafariTechnologyPreview-com.apple.Safari.UserRequests.plist",

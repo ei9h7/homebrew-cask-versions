@@ -1,6 +1,6 @@
 cask "vivaldi-snapshot" do
-  version "4.3.2439.41"
-  sha256 "37bdcd2367adcd7a0e45dba1007252db3b4517cb8230a1ccc3d223353b28458d"
+  version "5.1.2567.24"
+  sha256 "89f017e49785b7a1285300b9715295db7adef98711ec97f429acde9c24546b38"
 
   url "https://downloads.vivaldi.com/snapshot/Vivaldi.#{version}.universal.dmg"
   name "Vivaldi"
@@ -16,4 +16,12 @@ cask "vivaldi-snapshot" do
   depends_on macos: ">= :el_capitan"
 
   app "Vivaldi Snapshot.app"
+
+  zap trash: [
+    "~/Library/Application Support/Vivaldi Snapshot",
+    "~/Library/Caches/com.vivaldi.Vivaldi.snapshot",
+    "~/Library/Caches/Vivaldi Snapshot",
+    "~/Library/Preferences/com.vivaldi.Vivaldi.snapshot.plist",
+    "~/Library/Saved Application State/com.vivaldi.Vivaldi.snapshot.savedState",
+  ]
 end
